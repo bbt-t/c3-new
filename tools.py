@@ -33,7 +33,7 @@ def load_file(path_to_file: str) -> list[dict, ...]:
     :param path_to_file: file path
     :return: json loads file
     """
-    with open(path_to_file) as f:
+    with open(path_to_file, 'rb') as f:  # 'rb' - mode for compatibility (Win)
         data: list[dict, ...] = json_load(f)
     return data
 

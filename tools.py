@@ -34,16 +34,15 @@ def load_file(path_to_file: str) -> list[dict, ...]:
     :return: json loads file
     """
     with open(path_to_file, 'rb') as f:  # 'rb' - mode for compatibility (Win)
-        data: list[dict, ...] = json_load(f)
-    return data
+        return json_load(f)
 
 
-def parse_date(string_date: str, date_format: str = "%d.%m.%Y") -> str:
+def parse_date(string_date: str, date_format: str = '%d.%m.%Y') -> str:
     """
     Parse date from string and output in the correct format.
     :param string_date: date in string expression
     :param date_format: date format
-    :return:
+    :return: datetime in the correct format
     """
     return date_parse(string_date).strftime(date_format)
 
@@ -55,15 +54,14 @@ def get_tail_executed_data(data: list[dict, ...], to_take: int = 5) -> list[dict
     :param to_take: how many
     :return: part data
     """
-    part_data = []
-    count = 0
+    part_data, count = [], 0
+
     for item in data[::-1]:
         if count == to_take:
             break
-        if item["state"] != "EXECUTED":
-            continue
-        part_data.append(item)
-        count += 1
+        if item['state'] == 'EXECUTED':
+            part_data.append(item)
+            count += 1
     return part_data
 
 
@@ -76,7 +74,7 @@ def sort_data_by_date(data: list[dict, ...]) -> list[dict, ...]:
     return sorted(data, key=lambda x: date_parse(x['date']), reverse=True)
 
 
-def get_transactions_info(data: dict[int | str]) -> tuple:
+def get_transactions_info(data: dict[int | str]) -> tuple[str, str, str, str]:
     """
     Gets information about transactions.
     :param data: load date

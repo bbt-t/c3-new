@@ -2,9 +2,7 @@
   <img alt="" src="https://i.ibb.co/Lpk3tgK/c3-removebg-preview.png" width="300">
 </p>
 
-
-
-***Курсовая №3***
+### Курсовая №3
 
 - выводит на экран список из 5 последних выполненных клиентом операций в формате:
 
@@ -19,7 +17,7 @@ Win -> `python main.py`
 
 Linux -> `python3 main.py`
 
-***константы***
+***Константы***
 
 ```FILE``` ```ZIPFILE```
 

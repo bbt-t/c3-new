@@ -1,4 +1,4 @@
-import pathlib
+from pathlib import Path
 from tools import extract_file_by_name_from_zip, load_file, get_tail_executed_data, sort_data_by_date, show_info
 
 
@@ -9,7 +9,7 @@ DATE_FORMAT = '%d.%m.%Y'
 
 def main():
     # file existence check
-    if not pathlib.Path('operations.json').exists():
+    if not Path('operations.json').exists():
         print('extract zip-file')
         extract_file_by_name_from_zip(FILE, ZIPFILE)
 

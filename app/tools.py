@@ -5,17 +5,17 @@ from dateutil.parser import parse as date_parse
 from more_itertools import grouper
 
 
-def extract_all_files_from_zip(file_name: str, extract_to: str = None) -> None:
+def extract_all_files_from_zip(archive_name: str, extract_to: str = None) -> None:
     """
     Extract all files from zip-archive.
-    :param file_name: zip-archive name
+    :param archive_name: zip-archive name
     :param extract_to: path to extract
     """
-    with ZipFile(file_name) as f:
+    with ZipFile(archive_name) as f:
         f.extractall(extract_to)
 
 
-def extract_file_by_name_from_zip(file_name: str, zip_file_name: str, extract_to: str = '.') -> None:
+def extract_file_by_name_from_zip(file_name: str, zip_file_name: str, extract_to: str = 'data') -> None:
     """
     Extract file from zip-archive.
     :param file_name: file name in zip-archive
@@ -27,13 +27,13 @@ def extract_file_by_name_from_zip(file_name: str, zip_file_name: str, extract_to
         f.extract(file_name, extract_to)
 
 
-def load_file(path_to_file: str) -> list[dict, ...]:
+def load_file(file_path: str) -> list[dict, ...]:
     """
     Load file.
-    :param path_to_file: file path
+    :param file_path: file path
     :return: json loads file
     """
-    with open(path_to_file, 'rb') as f:  # 'rb' - mode for compatibility (Win)
+    with open(file_path, 'rb') as f:  # 'rb' - mode for compatibility (Win)
         return json_load(f)
 
 

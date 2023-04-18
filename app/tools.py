@@ -15,7 +15,7 @@ def extract_all_files_from_zip(archive_name: str, extract_to: str = None) -> Non
         f.extractall(extract_to)
 
 
-def extract_file_by_name_from_zip(file_name: str, zip_file_name: str, extract_to: str = 'data') -> None:
+def extract_file_by_name_from_zip(file_name: str, zip_file_name: str, extract_to: str) -> None:
     """
     Extract file from zip-archive.
     :param file_name: file name in zip-archive

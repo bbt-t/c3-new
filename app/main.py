@@ -6,6 +6,7 @@ from tools import extract_file_by_name_from_zip, load_file, get_tail_executed_da
 from click import command, option
 
 
+# add CLI commands
 @command()
 @option("--file", default=FILE, help="data load file name")
 @option("--arch", default=ZIPFILE, help="data load zip-archive file name")
@@ -13,12 +14,12 @@ def main(file: str, arch: str) -> None:
     """
     Point iof entry.
     """
-    # file existence check
     file_path = f"{BASE_DIR}{file}"
 
+    # file existence check
     if not Path(file_path).exists():
         print('extract zip-file')
-        extract_file_by_name_from_zip(file, f"{BASE_DIR}{arch}")
+        extract_file_by_name_from_zip(file, f"{BASE_DIR}{arch}", BASE_DIR)
 
     # load file
     file_data = load_file(file_path)

@@ -1,0 +1,12 @@
+[files]
+current = 'operations.json'
+zip_archive = 'operations.zip'
+
+[data_dir]
+dir = 'data'
+
+[date_format]
+format = '%d.%m.%Y'
+
+[tail]
+num = 5

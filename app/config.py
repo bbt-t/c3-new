@@ -1,8 +1,11 @@
 from pathlib import Path
+from tomllib import load as load_toml
 
-FILE = 'operations.json'
-ZIPFILE = 'operations.zip'
-DATE_FORMAT = '%d.%m.%Y'
+# Read .toml file
+with open("../config.toml", "rb") as f:
+    data = load_toml(f)
 
-BASE_DIR = f"{Path(__file__).parent.parent}/data/"
-
+# Constants from loaded .toml
+FILE, ZIPFILE = data.get('files').values()
+DATE_FORMAT = data.get('date_format')['format']
+BASE_DIR = f"{Path(__file__).parent.parent}/{data.get('data_dir')['dir']}/"

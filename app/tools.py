@@ -58,8 +58,10 @@ def get_tail_executed_data(data: list[dict, ...], to_take: int = 5) -> list[dict
     part_data, count = [], 0
 
     for item in data[::-1]:
+        # should not be more param to_take
         if count == to_take:
             break
+
         if item['state'] == 'EXECUTED':
             part_data.append(item)
             count += 1
@@ -90,6 +92,7 @@ def get_transactions_info(data: dict[int | str]) -> tuple[str, str, str, str]:
             )
         )
     except KeyError:
+        # set values if the key is not exist
         name_card_from, secure_card_from = 'Информация о счете', 'отсутствует'
 
     name_card_to, card_to = data['to'].split()
@@ -108,7 +111,7 @@ def show_info(data: list[dict, ...], date_format: str) -> None:
         date = parse_date(item['date'], date_format)
         transactions_info = get_transactions_info(item)
         operation_amount = item['operationAmount']
-
+        # result output
         print(
             f"{date} {item['description']}",
             "{} {} -> {} {}".format(*transactions_info),

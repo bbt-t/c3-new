@@ -1,3 +1,4 @@
+import sys
 from json import load as json_load
 from zipfile import ZipFile
 
@@ -114,4 +115,5 @@ def show_info(data: list[dict, ...], date_format: str) -> None:
             f"{operation_amount['amount']} {operation_amount['currency']['name']}",
             sep='\n',
             end='\n\n',
+            file=sys.stdout,  # ?
         )

@@ -14,12 +14,12 @@ def main(file: str, arch: str) -> None:
     """
     Point iof entry.
     """
-    file_path = f"{BASE_DIR}{file}"
+    file_path = f'{BASE_DIR}{file}'
 
     # file existence check
     if not Path(file_path).exists():
         print('extract zip-file')
-        extract_file_by_name_from_zip(file, f"{BASE_DIR}{arch}", BASE_DIR)
+        extract_file_by_name_from_zip(file, f'{BASE_DIR}{arch}', BASE_DIR)
 
     # load file
     file_data = load_file(file_path)

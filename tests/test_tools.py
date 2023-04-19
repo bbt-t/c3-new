@@ -4,27 +4,29 @@ from zipfile import ZipFile
 from pathlib import Path
 from pytest import mark as pytest_mark
 
-from tools import (
+from app.tools import (
     extract_file_by_name_from_zip, extract_all_files_from_zip,
     load_file, parse_date, get_tail_executed_data
 )
 
+BASE_DIR_DATA = f'{Path(__file__).parent}/data'
+
 
 def test_extract_file_by_name_from_zip_positive():
-    extract_file_by_name_from_zip('doc2.json', 'data/test_extract.zip', 'data')
-    file = Path('data/doc2.json')
+    extract_file_by_name_from_zip('doc2.json', f'{BASE_DIR_DATA}/test_extract.zip', BASE_DIR_DATA)
+    file = Path(f'{BASE_DIR_DATA}/doc2.json')
     result = file.exists()
     file.unlink()
     assert result is True
 
 
 def test_extract_all_files_from_zip_positive():
-    extract_all_files_from_zip('data/test_extract.zip', 'data')
-    zf = ZipFile('data/test_extract.zip').namelist()
+    extract_all_files_from_zip(f'{BASE_DIR_DATA}/test_extract.zip', BASE_DIR_DATA)
+    zf = ZipFile(f'{BASE_DIR_DATA}/test_extract.zip').namelist()
 
     result = False
     for f in zf:
-        file = Path(f"data/{f}")
+        file = Path(f'{BASE_DIR_DATA}/{f}')
         if not file.exists:
             break
         file.unlink()
@@ -36,8 +38,8 @@ def test_extract_all_files_from_zip_positive():
 
 @pytest_mark.parametrize(
     'path_to_file, expected_result', [
-        ('data/test_file.json', True),
-        ('data/test_file.txt', True),
+        (f'{BASE_DIR_DATA}/test_file.json', True),
+        (f'{BASE_DIR_DATA}/test_file.txt', True),
     ]
 )
 def test_load_file_positive(path_to_file: str, expected_result):
@@ -56,7 +58,7 @@ def test_parse_date_positive(string_date: str, date_format: str):
 
 @pytest_mark.parametrize('to_take', [2, 3, 4, 5])
 def test_get_tail_executed_data_positive(to_take):
-    with open('data/test_operations.json') as f:
+    with open(f'{BASE_DIR_DATA}/test_operations.json') as f:
         data = json_load(f)
     result = get_tail_executed_data(data, to_take)
     assert isinstance(result, list) is True and len(result) == to_take

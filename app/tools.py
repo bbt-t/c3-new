@@ -1,3 +1,4 @@
+import sys
 from json import load as json_load
 from zipfile import ZipFile
 
@@ -5,17 +6,17 @@ from dateutil.parser import parse as date_parse
 from more_itertools import grouper
 
 
-def extract_all_files_from_zip(file_name: str, extract_to: str = None) -> None:
+def extract_all_files_from_zip(archive_name: str, extract_to: str = None) -> None:
     """
     Extract all files from zip-archive.
-    :param file_name: zip-archive name
+    :param archive_name: zip-archive name
     :param extract_to: path to extract
     """
-    with ZipFile(file_name) as f:
+    with ZipFile(archive_name) as f:
         f.extractall(extract_to)
 
 
-def extract_file_by_name_from_zip(file_name: str, zip_file_name: str, extract_to: str = '.') -> None:
+def extract_file_by_name_from_zip(file_name: str, zip_file_name: str, extract_to: str) -> None:
     """
     Extract file from zip-archive.
     :param file_name: file name in zip-archive
@@ -27,13 +28,13 @@ def extract_file_by_name_from_zip(file_name: str, zip_file_name: str, extract_to
         f.extract(file_name, extract_to)
 
 
-def load_file(path_to_file: str) -> list[dict, ...]:
+def load_file(file_path: str) -> list[dict, ...]:
     """
     Load file.
-    :param path_to_file: file path
+    :param file_path: file path
     :return: json loads file
     """
-    with open(path_to_file, 'rb') as f:  # 'rb' - mode for compatibility (Win)
+    with open(file_path, 'rb') as f:  # 'rb' - mode for compatibility (Win)
         return json_load(f)
 
 
@@ -57,8 +58,10 @@ def get_tail_executed_data(data: list[dict, ...], to_take: int = 5) -> list[dict
     part_data, count = [], 0
 
     for item in data[::-1]:
+        # should not be more param to_take
         if count == to_take:
             break
+
         if item['state'] == 'EXECUTED':
             part_data.append(item)
             count += 1
@@ -89,6 +92,7 @@ def get_transactions_info(data: dict[int | str]) -> tuple[str, str, str, str]:
             )
         )
     except KeyError:
+        # set values if the key is not exist
         name_card_from, secure_card_from = 'Информация о счете', 'отсутствует'
 
     name_card_to, card_to = data['to'].split()
@@ -107,11 +111,12 @@ def show_info(data: list[dict, ...], date_format: str) -> None:
         date = parse_date(item['date'], date_format)
         transactions_info = get_transactions_info(item)
         operation_amount = item['operationAmount']
-
+        # result output
         print(
             f"{date} {item['description']}",
             "{} {} -> {} {}".format(*transactions_info),
             f"{operation_amount['amount']} {operation_amount['currency']['name']}",
             sep='\n',
             end='\n\n',
+            file=sys.stdout,  # ?
         )

@@ -1,3 +1,4 @@
+from logging import error as log_err
 from pathlib import Path
 
 from config import FILE, ZIPFILE, DATE_FORMAT, BASE_DIR
@@ -18,7 +19,7 @@ def main(file: str, arch: str) -> None:
 
     # file existence check
     if not Path(file_path).exists():
-        print('extract zip-file')
+        log_err('extract zip-file')
         extract_file_by_name_from_zip(file, f"{BASE_DIR}{arch}", BASE_DIR)
 
     # load file

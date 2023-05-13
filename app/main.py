@@ -13,7 +13,7 @@ from click import command, option
 @option("--arch", default=ZIPFILE, help="data load zip-archive file name")
 def main(file: str, arch: str) -> None:
     """
-    Point iof entry.
+    Point of entry.
     """
     file_path = f"{BASE_DIR}{file}"
 

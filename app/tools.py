@@ -1,3 +1,4 @@
+from operator import itemgetter
 from sys import stdout
 from json import load as json_load
 from zipfile import ZipFile
@@ -74,7 +75,7 @@ def sort_data_by_date(data: list[dict, ...]) -> list[dict, ...]:
     :param data: loaded data
     :return: sorted data
     """
-    return sorted(data, key=lambda x: date_parse(x['date']), reverse=True)
+    return sorted(data, key=itemgetter('date'), reverse=True)
 
 
 def get_transactions_info(data: dict[int | str]) -> tuple[str, str, str, str]:
@@ -108,9 +109,9 @@ def show_info(data: list[dict, ...], date_format: str) -> None:
     :param date_format: time format
     """
     for item in data:
-        date = parse_date(item['date'], date_format)
-        transactions_info = get_transactions_info(item)
-        operation_amount = item['operationAmount']
+        date: str = parse_date(item['date'], date_format)
+        transactions_info: tuple[str, str, str, str] = get_transactions_info(item)
+        operation_amount: dict = item['operationAmount']
         # result output
         print(
             f"{date} {item['description']}",
